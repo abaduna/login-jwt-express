@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Login.css";
 import Home from "../Home/Home";
-
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginSuccessful, setLoginSuccessful] = useState(false);
+  const navigate = useNavigate();
   const handlerLogin = async (e) => {
     e.preventDefault();
     console.log(username);
@@ -28,7 +29,7 @@ const Login = () => {
       if (result.token) {
         console.log(parseJwt(result.token));
         localStorage.setItem("token", result.token);
-        setLoginSuccessful(true);
+        navigate("/home");
       } else {
         setLoginSuccessful(false);
       }
@@ -51,9 +52,11 @@ const Login = () => {
 
     return JSON.parse(jsonPayload);
   }
-  if (loginSuccessful) {
-    return <Home />;
-  }
+ useEffect(()=>{
+
+ },[
+
+ ])
   return (
     <>
       <form className="login-form">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Login from "../login/Login";
 import Home from "../Home/Home";
-
+import { Navigate } from "react-router-dom";
 function Main() {
   const [tokenExisteAndisValid,setTokenExisteAndisValid] = useState(false)
   function parseJwt(token) {
@@ -20,17 +20,18 @@ function Main() {
     }
   }
   parseJwt(localStorage.getItem("token"))
-  if (localStorage.getItem("token").exp * 1000 < Date.now()) {
-    tokenExisteAndisValid(false);
+  if ( localStorage.getItem("token") &&localStorage.getItem("token").exp * 1000 < Date.now()) {
+    <Navigate to="/login" />
   }
   
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setTokenExisteAndisValid(true);
+      
+      <Navigate to="/home" />
     }
   }, []);
-  return <>{tokenExisteAndisValid ? <Home></Home> : <Login />}</>;
+  return <></>;
 }
 
 export default Main;
